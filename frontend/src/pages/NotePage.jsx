@@ -72,7 +72,7 @@ const NotePage = () => {
     }
 
     const deleteNote = async () => {
-        fetch(`/api/notes/${noteID}/`, {
+        fetch(`${url}/api/notes/${noteID}/`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
