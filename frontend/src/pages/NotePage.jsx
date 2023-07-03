@@ -41,26 +41,41 @@ const NotePage = () => {
     } 
 
     const updateNote = async () => {
-        fetch(`${url}/api/notes/${noteID}/`, {
+        setIsLoading(true)
+        await fetch(`${url}/api/notes/${noteID}/`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(note)
         })
+        window.location = '/'
     }
 
     const createNote = async () => {
-        fetch(`${url}/api/notes/`, {
+        setIsLoading(true)
+        await fetch(`${url}/api/notes/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(note)
         })
+        window.location = '/'
     }
 
-    let update = () => {
+    const deleteNote = async (id) => {
+        setIsLoading(true)
+        await fetch(`${url}/api/notes/${note.id}/`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        window.location = '/';
+    }
+
+    let update = async () => {
         if (noteID !== 'new' && note.body === ''){
             deleteNote()
         }else if(noteID !== 'new'){
@@ -68,17 +83,6 @@ const NotePage = () => {
         }else if(noteID === 'new' && note.body !== ''){
             createNote()
         }
-        window.location = '/';
-    }
-
-    const deleteNote = async () => {
-        fetch(`${url}/api/notes/${noteID}/`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        window.location = '/'
     }
 
   return (
@@ -88,7 +92,7 @@ const NotePage = () => {
             <div className="back-btn">
             <ArrowLeft title="Back" style={{cursor: 'pointer'}} onClick={update}/>
             </div>
-            {noteID !== 'new' ? <button title='Delete Note' onClick={deleteNote}>Delete</button> : <button title='Save Note' onClick={update}>Done</button>}
+            {noteID !== 'new' ? <button title='Delete Note' onClick={() => { deleteNote(note.id) }}>Delete</button> : <button title='Save Note' onClick={update}>Done</button>}
         </div>
         <textarea autoFocus onChange={handleChange} value={note.body} style={styling}></textarea>
     </> 
