@@ -8,7 +8,7 @@ const NotePage = () => {
     const [isLoading, setIsLoading] = useState(true)
     const params = useParams()
     let noteID = params.id
-    let url = process.env.API_LINK
+    let url = process.env.REACT_APP_API_LINK
 
     useEffect(() => {
         getNote();
