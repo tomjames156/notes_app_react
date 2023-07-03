@@ -8,6 +8,7 @@ const NotePage = () => {
     const [isLoading, setIsLoading] = useState(true)
     const params = useParams()
     let noteID = params.id
+    let url = process.env.API_LINK
 
     useEffect(() => {
         getNote();
@@ -16,7 +17,7 @@ const NotePage = () => {
 
     const getNote = async () => {
         if (noteID !== 'new'){
-            let response = await fetch(`/api/notes/${noteID}/`)
+            let response = await fetch(`${url}/api/notes/${noteID}/`)
             let data = await response.json()
             setNote(data)
         }
@@ -40,7 +41,7 @@ const NotePage = () => {
     } 
 
     const updateNote = async () => {
-        fetch(`/api/notes/${noteID}/`, {
+        fetch(`${url}/api/notes/${noteID}/`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -50,7 +51,7 @@ const NotePage = () => {
     }
 
     const createNote = async () => {
-        fetch('/api/notes/', {
+        fetch(`${url}/api/notes/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

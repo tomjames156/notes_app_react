@@ -7,6 +7,7 @@ import AddNoteBtn from '../components/AddNoteBtn'
 const NotesListPage = () => {
     const [notes, setNotes] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    let url = process.env.API_LINK
 
     useEffect(() => {
         getNotes();
@@ -14,7 +15,7 @@ const NotesListPage = () => {
     }, [])
 
     const getNotes = async () => {
-        let response = await fetch("/api/notes/")
+        let response = await fetch(`${url}/api/notes/`)
         let data = await response.json()
         setNotes(data)
     }
